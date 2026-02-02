@@ -52,10 +52,118 @@ Navigateur : Sélectionner LNMP (One-click)
   
 Laisser l’installation se faire (profiter pour faire la doc)  
 
-## Préparation du VPS
+Navigateur : Se rendre dans l’onglet "Website" à gauche  
+  
+Navigateur : Cliquer sur le bouton "Add site"  
+  
+Navigateur : Noter le nom de domaine fournis par MNS dans "Domaine name"  
+  
+Navigateur : Sélectionner "Create" sur le champ "FTP"  
+  
+Noter : FTP settings, Password  
+  
+Navigateur : Sélectionner "MySQL" sur le champ "Database"  
+  
+Noter : Database settings, Password  
+  
+"Database settings" sera le nom et l’identifiant de la BDD  
+  
+"Password" sera le mot de passe de la BDD  
+  
+Navigateur : Cliquer sur le bouton "Confirm"  
+  
+Navigateur : Fermer la modale avec les identifiants  
+  
+Etape 7 : Déployer  
+Terminal :  cd /  
+  
+Terminal :  ls /www/wwwroot  
+  
+Sur le serveur (via SSH) : cd /  
+  
+Sur le serveur (via SSH) : ls /www/wwwroot  
+  
+Vérifier qu’il y a bien un fichier avec l’IP fournis par MNS  
+  
+Sur le serveur (via SSH) : mkdir -p /var/depot_git  
+  
+Sur le serveur (via SSH) : cd /var/depot_git  
+  
+Sur le serveur (via SSH) : git init --bare  
+  
+Terminal (macOS) : git remote add vps root@[adresse_ip]:/var/depot_git  
+  
+Terminal (macOS) : git push -u vps [tag]  
+  
+Sur le serveur (via SSH) : cd /  
+  
+Sur le serveur (via SSH) : sudo touch /deploy.sh  
+  
+Sur le serveur (via SSH) : sudo nano /deploy.sh  
+  
+Sur le serveur (via SSH) (dans /deploy.sh) git --work-tree=/www/wwwroot/[adresse_ip] --git-dir=/var/depot_git checkout -f $1  
+  
+Sur le serveur (via SSH) : Quitter le fichier (ctrl+X, O, Entrer)  
+  
+Sur le serveur (via SSH) : sudo chmod +x /deploy.sh  
+  
+Sur le serveur (via SSH) :
+Navigateur : Se rendre dans l’onglet "Site directory"  
+  
+Navigateur : Noter "/public" sur le champ "Running directory"  
+  
+Navigateur : Désactiver le "XSS attack"  
+  
+Navigateur : Se rendre dans l’onglet "SSL"  
+  
+Navigateur : Sélectionner "Let’s Encrypt"  
+  
+Navigateur : Cocher le nom de domaine  
+  
+Navigateur : Cliquer sur le bouton "Apply"  
+  
+Navigateur : Se rendre dans l’onglet "Composer"  
+  
+Navigateur : Fermer la modale  
+  
+Etape 9 : Variables d'environements  
+VSCode : Modifier les variables d'environements  
+  
+Navigateur : Dérouler "New" et selectionner "New blank file" et le nomer ".env"  
+  
+Navigateur : Modifier les variables d'environements  
+  
+Navigateur : Fermer et enregistrer le fichier  
+  
+Etape 10 : Chaque commit (après chaque résolution de bug)  
+Terminal : VSCode git add .  
+  
+Liste des mots clés dans cliff.toml  
+  
+Terminal (macOS) : git add .  
+  
+Liste des mots clés dans cliff.toml  
+  
+Terminal (macOS) : git commit -m "[mot_clé]:[commentaire]"  
+  
+Terminal (macOS) :
+Liste des mots clés dans cliff.toml  
+  
+Terminal (macOS) : git add .  
+  
+Liste des mots clés dans cliff.toml  
+  
+Terminal (macOS) : git commit -m "[mot_clé]:[commentaire]"  
+  
+Terminal (macOS) : git add .  
+  
+Terminal : VSCode git commit -m "version [tag]"  
+  
+Terminal : VSCode git tag [tag]  
+  
+Terminal : VSCode git push origin main  
+  
+Terminal : VSCode git push vps [tag]  
+  
+Terminal :  bash /deploy.sh [tag]  
 
-Todo...
-
-## Méthode de déploiement
-
-Todo...
